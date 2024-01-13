@@ -1,1 +1,1 @@
-# Parallel-with-DeepSpeec-Megatron
+# Parallel-with-DeepSpeed-Megatron
