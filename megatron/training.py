@@ -47,6 +47,7 @@ import deepspeed
 from deepspeed.accelerator import get_accelerator
 from deepspeed.compression.compress import init_compression, redundancy_clean
 from deepspeed.runtime.data_pipeline.data_routing.helper import convert_to_random_ltd
+from deepspeed.runtime.utils import see_memory_usage
 from megatron.model.transformer import ParallelTransformerLayer
 
 from deepspeed import comm as dist
@@ -73,6 +74,7 @@ def _create_ds_config_dict():
         ds_config_dict = args.deepspeed_config
     else:
         with open(args.deepspeed_config, 'r', encoding='utf-8') as config_file:
+            print(config_file)
             ds_config_dict = json.load(config_file)
 
     if args.universal_checkpoint:
@@ -1237,6 +1239,7 @@ def train(forward_step_func, model, optimizer, opt_param_scheduler,
         # Evaluation
         if args.eval_interval and iteration % args.eval_interval == 0 and \
            args.do_valid:
+            see_memory_usage(f"before model evaluation", force=True)
             prefix = 'iteration {}'.format(iteration)
             evaluate_and_print_results(prefix, forward_step_func,
                                        valid_data_iterator, model,

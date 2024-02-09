@@ -214,7 +214,7 @@ def get_args():
                        choices=['lazy', 'cached', 'mmap'])
 
     group = parser.add_argument_group(title='runtime')
-    group.add_argument('--workers', type=int, required=True,
+    group.add_argument('--workers', type=int,  required=True,
                        help=('Number of worker processes to launch.'
                              'A good default for fast pre-processing '
                              'is: (workers * partitions) = available CPU cores.'))
